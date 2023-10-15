@@ -5,21 +5,26 @@ import { WeatherData } from '../models/weather.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-  
-  getWeatherData(cityName:string): Observable<WeatherData>{
+  getWeatherData(cityName: string): Observable<WeatherData> {
     return this.http.get<WeatherData>(environment.weatherApiBaseUrl, {
       headers: new HttpHeaders()
-        .set(environment.XRapidAPIHostHeaderName, environment.XRapidAPIHostHeaderValue)
-        .set(environment.XRapidAPIKeyHeaderName, environment.XRapidAPIKeyHeaderValue),
+        .set(
+          environment.XRapidAPIHostHeaderName,
+          environment.XRapidAPIHostHeaderValue
+        )
+        .set(
+          environment.XRapidAPIKeyHeaderName,
+          environment.XRapidAPIKeyHeaderValue
+        ),
       params: new HttpParams()
         .set('q', cityName)
         .set('units', 'imperial')
-        .set('mode', 'json')
+        .set('mode', 'json'),
     });
   }
 }
